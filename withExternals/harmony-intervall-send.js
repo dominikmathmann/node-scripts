@@ -13,6 +13,7 @@ harmony("192.168.178.26").then(function(harmonyClient) {
     if (functionToCall) {
       var encodedAction = functionToCall.action.replace(/\:/g, "::");
       harmonyClient.send("holdAction", "action=" + encodedAction + ":status=press");
+      harmonyClient.send("holdAction", "action=" + encodedAction + ":status=release");
       harmonyClient.end();
     } else {
       throw new Error("Cant fire command.");
