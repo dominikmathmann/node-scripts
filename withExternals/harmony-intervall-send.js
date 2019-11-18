@@ -5,15 +5,19 @@ harmony("192.168.178.26").then(function(harmonyClient) {
     var device = commands.device[1];
     var powerControls = device.controlGroup
       .filter(function(group) {
-        return group.name.toLowerCase() === "displaymode";
+        return group.name.toLowerCase() === "volume";
       })
       .pop();
-    var functionToCall = powerControls["function"][0];
+    var functionUp = powerControls["function"][1];
+    var functionDown = powerControls["function"][2];
 
-    if (functionToCall) {
-      var encodedAction = functionToCall.action.replace(/\:/g, "::");
-      harmonyClient.send("holdAction", "action=" + encodedAction + ":status=press");
-      harmonyClient.send("holdAction", "action=" + encodedAction + ":status=release");
+    if (functionUp && functionDown) {
+      var encodedActionUp = functionUp.action.replace(/\:/g, "::");
+      var encodedActionDown = functionDown.action.replace(/\:/g, "::");
+      harmonyClient.send("holdAction", "action=" + encodedActionDown + ":status=press");
+      harmonyClient.send("holdAction", "action=" + encodedActionDown + ":status=release");
+      harmonyClient.send("holdAction", "action=" + encodedActionUp + ":status=press");
+      harmonyClient.send("holdAction", "action=" + encodedActionUp + ":status=release");
       harmonyClient.end();
     } else {
       throw new Error("Cant fire command.");
