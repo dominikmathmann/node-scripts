@@ -7,18 +7,25 @@
 // ==/UserScript==
 
 function addCustomSearchResult(jNode) {
-  jNode.prepend(
-    '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Rewe_-_Dein_Markt_Logo.svg/512px-Rewe_-_Dein_Markt_Logo.svg.png" style="width: 200px;" id="connectToRewe"/>'
-  );
+    jNode.prepend(
+        '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Rewe_-_Dein_Markt_Logo.svg/512px-Rewe_-_Dein_Markt_Logo.svg.png" style="width: 200px;" id="connectToRewe"/>'
+    );
 
-  $("#connectToRewe").on("click", connectToRewe);
+    $("#connectToRewe").on("click", connectToRewe);
 }
 
 function connectToRewe() {
-  $(".bring-list-item-container-to-purchase .bring-list-item-name").each(function() {
-    window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=80&search=" + this.innerHTML);
-  });
-  //https://shop.rewe.de/productList?search=Feta
+    let fixList = ["Kaffee", "Eier", "Joghurt"]
+
+    $(".bring-list-item-container-to-purchase .bring-list-item-name").each(function () {
+        let food = this.innerHTML
+        let fIndex = fixList.indexOf(food);
+        if (fIndex != -1) fixList.splice(fIndex, 1);
+        window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=80&search=" + food);
+    });
+    
+    fixList.forEach(e => window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=80&search=" + e));
+    //https://shop.rewe.de/productList?search=Feta
 }
 
 waitForKeyElements(".bring-list-selector-feedback-container", addCustomSearchResult);
