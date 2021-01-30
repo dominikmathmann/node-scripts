@@ -10,8 +10,10 @@ let productDivHeight = 416;
 
 function scrollToFavourite(){
   let favs = $(".lrms-isActive");
-  if (favs)
-		window.scrollTo(0, favs[0].getBoundingClientRect().top - productDivHeight)
+  if (favs){
+		window.scrollTo(0, favs[0].getBoundingClientRect().top - productDivHeight);
+    favs[0].closest(".search-service-product").style.border="4px solid red"
+  }
 }
 
 waitForKeyElements(".lrms-addToFavHeartButton", scrollToFavourite);
