@@ -17,8 +17,12 @@ function addCustomSearchResult(jNode) {
 function connectToRewe() {
     let fixList = ["Kaffee", "Eier", "Joghurt"]
 
-    $(".bring-list-item-container-to-purchase .bring-list-item-name").each(function () {
-        let food = this.innerHTML
+    $(".bring-list-item-container-to-purchase .bring-list-item-text-container").each( (index,ele) => {
+        console.log(ele);
+        let main = ele.childNodes[1];
+        let sub = ele.childNodes[3];
+        let subText = sub.innerHTML.trim()?", " + sub.innerHTML:"";
+        let food = main.innerHTML + subText
         let fIndex = fixList.indexOf(food);
         if (fIndex != -1) fixList.splice(fIndex, 1);
         window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=80&search=" + food);
