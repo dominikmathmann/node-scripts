@@ -7,8 +7,12 @@
 // ==/UserScript==
 
 let productDivHeight = 416;
+var gm_done=false;
 
 function scrollToFavourite(){
+  if (gm_done) return;
+  
+  gm_done= true;
   let favs = $(".lrms-isActive");
   if (favs){
 		window.scrollTo(0, favs[0].getBoundingClientRect().top - productDivHeight);
@@ -16,4 +20,6 @@ function scrollToFavourite(){
   }
 }
 
-waitForKeyElements(".lrms-addToFavHeartButton", scrollToFavourite);
+waitForKeyElements(".lrms-isActive", scrollToFavourite);
+
+waitForKeyElements(".search-service-rsPageableProductListWrapper", () => {gm_done=false});
