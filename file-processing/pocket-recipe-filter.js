@@ -22,6 +22,8 @@ fs.readFile('D:/dev/pocket/ril_export.html', 'utf8' , (err, data) => {
  }
   );
    const count = urls.length;
+   let htmlContent = "";
+    let filename = "checkoch_" + new Date().getTime() + ".html";
    for (let i=0;i<=10;i++){
     let rnd=Math.floor(Math.random() * count);
     var url = urls[rnd];
@@ -34,7 +36,12 @@ fs.readFile('D:/dev/pocket/ril_export.html', 'utf8' , (err, data) => {
     // by url
     //    require('child_process').exec('start ' + url);
     //by title
-        require('child_process').exec('start ' + "https://getpocket.com/my-list/search?query=" + encodeURIComponent(title));
+    //    require('child_process').exec('start ' + "https://getpocket.com/my-list/search?query=" + encodeURIComponent(title));
+    let pocketurl = "https://getpocket.com/my-list/search?query=" + encodeURIComponent(title);
+    htmlContent+=`<div><button onclick="this.parentNode.style.display='none'">hide</button><iframe style="float: left" src="${url}" width="850" height="700"></iframe><iframe src="${pocketurl}" width="475" height="700"></iframe></div><br><br><hr><br><br>`
    }
+
+   fs.writeFile(filename, htmlContent, "utf8", () => {});
+   require('child_process').exec('start ' + filename);
   }
  )
