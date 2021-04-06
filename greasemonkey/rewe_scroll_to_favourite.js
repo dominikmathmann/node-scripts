@@ -10,7 +10,10 @@ let productDivHeight = 416;
 var gm_done=false;
 
 function scrollToFavourite(){
-
+    console.log("Fav " + gm_done);
+  if (gm_done) return;
+  
+  setTimeout(() => {gm_done= true}, 1000);
   let favs = $(".lrms-isActive");
   if (favs){
 		window.scrollTo(0, favs[0].getBoundingClientRect().top - productDivHeight);
