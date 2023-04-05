@@ -16,9 +16,12 @@ function scrollToFavourite(){
   setTimeout(() => {gm_done= true}, 1000);
   let favs = $(".lrms-isActive");
   if (favs){
-		window.scrollTo(0, favs[0].getBoundingClientRect().top - productDivHeight);
-    favs[0].closest(".search-service-product").style.border="4px solid red"
-    favs[0].focus();
+    let fav = favs.last().get()[0]
+    console.log(fav.getBoundingClientRect().top - productDivHeight);
+		window.scrollTo(0, fav.getBoundingClientRect().top - productDivHeight);
+    fav.closest(".search-service-product").style.border="4px solid red"
+    fav.focus();
+    gm_done=true;
   }
 }
 
