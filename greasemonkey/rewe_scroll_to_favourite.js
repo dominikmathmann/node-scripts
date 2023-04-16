@@ -16,10 +16,11 @@ function scrollToFavourite(){
   setTimeout(() => {gm_done= true}, 1000);
   let favs = $(".lrms-isActive");
   if (favs){
+    favs.each((i,e) => e.closest(".search-service-product").style.border="4px solid red");
     let fav = favs.last().get()[0]
     console.log(fav.getBoundingClientRect().top - productDivHeight);
 		window.scrollTo(0, fav.getBoundingClientRect().top - productDivHeight);
-    fav.closest(".search-service-product").style.border="4px solid red"
+    //fav.closest(".search-service-product").style.border="4px solid red"
     fav.focus();
     gm_done=true;
   }
