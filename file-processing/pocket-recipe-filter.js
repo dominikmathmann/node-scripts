@@ -1,32 +1,19 @@
 const cheerio = require('cheerio');
+const { log } = require('console');
 const fs = require('fs');
 
 const urls = [];
 const titles = [];
 
-fs.readFile('D:/dev/pocket/8efbf6e7-dc65-4bd1-89eb-0e5409063b88.html', 'utf8' , (err, data) => {
+fs.readFile('D:/dev/pocket/d82cdfea-dcd2-404c-b5d5-cd590c8bda4e.htm', 'utf8' , (err, data) => {
   const $ = cheerio.load(data);
-  $('a').each( (i,e) => {
+  const recipeLinks = $('h3:contains("Rezept")').parent().find('a');
+  recipeLinks.each( (i,e) => {
   let href = $(e).attr('href');
   let txt = $(e).text();
-  if(
-    href.indexOf('chefkoch.de')!=-1 ||
-    href.indexOf('lecker.de')!=-1 ||
-    href.indexOf('essen')!=-1 ||
-    href.indexOf('rewe')!=-1 ||
-   href.indexOf('eat')!=-1 ||
-    href.indexOf('sevencooks')!=-1 ||
-    href.indexOf('freundin')!=-1 ||
-    href.indexOf('meine-familie-und-ich')!=-1 ||
-    href.indexOf('kitchenstories')!=-1 ||
-    href.indexOf('springlane')!=-1 ||
-    href.indexOf('bild')!=-1 ||
-    href.indexOf('malende')!=-1 ||
-    href.indexOf('kptncook')!=-1
-    ) {
-        urls.push(href)
-        titles.push(txt)
-    }
+    urls.push(href)
+    titles.push(txt)
+
  }
   );
    const count = urls.length;
@@ -61,7 +48,8 @@ fs.readFile('D:/dev/pocket/8efbf6e7-dc65-4bd1-89eb-0e5409063b88.html', 'utf8' , 
                 </a>
             </h2>
             </div>
-            <iframe style="float: left" src="${url}" width="850" height="700"></iframe></div>`
+            <iframe id="f${i}" style="float: left" width="850" height="700"></iframe></div>
+            <script>setTimeout(() => document.getElementById('f${i}').src='${url}', ${i*1000})</script>`
    }
 htmlContent+='</div>'
    let f = fs.writeFile(filename, htmlContent, "utf8", () => {});
