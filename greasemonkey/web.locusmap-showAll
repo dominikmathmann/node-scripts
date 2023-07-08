@@ -14,7 +14,7 @@ function addCustomHeader() {
     console.log("run");
       parser = new DOMParser()
       t = parser.parseFromString(`
-              <img class="ddImg" id="ddToggle" style="cursor: pointer;" height="40px" src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-remove-red-eye_90161.png" (click)="ddToggleVisibility()"></img>
+              <img class="ddImg" id="ddToggle" style="cursor: pointer;" height="40px" src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-remove-red-eye_90161.png"></img>
           `, 'text/html')
   
     t.getElementById('ddToggle').addEventListener('click', () => {
