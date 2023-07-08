@@ -1,0 +1,33 @@
+// ==UserScript==
+// @name     LocusMaps
+// @version  1
+// @require  https://code.jquery.com/jquery-3.7.0.slim.min.js
+// @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
+// @grant    GM_addStyle
+// ==/UserScript==
+
+
+
+
+
+function addCustomHeader() {
+    console.log("run");
+      parser = new DOMParser()
+      t = parser.parseFromString(`
+              <img class="ddImg" id="ddToggle" style="cursor: pointer;" height="40px" src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-remove-red-eye_90161.png" (click)="ddToggleVisibility()"></img>
+          `, 'text/html')
+  
+    t.getElementById('ddToggle').addEventListener('click', () => {
+           $("button[title='Auf Karte anzeigen']").each((index, ele) => {
+             setTimeout(() => ele.click(), index*400);
+           });
+      })
+    
+    
+      $("header").append(t.body.firstChild);
+  
+  }
+  
+  
+  
+  waitForKeyElements("login-btn", setTimeout(() => addCustomHeader(), 1000));
