@@ -1,0 +1,37 @@
+// ==UserScript==
+// @name     outdooractive-download-all
+// @version  1
+// @require  https://code.jquery.com/jquery-3.7.0.slim.min.js
+// @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
+// @grant    GM_addStyle
+// ==/UserScript==
+
+
+function addCustomHeader() {
+    console.log("run");
+      parser = new DOMParser()
+      t = parser.parseFromString(`
+              <img class="ddImg" id="ddDownload" style="cursor: pointer;margin-right: 50px;" height="40px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Download-Icon.png/600px-Download-Icon.png?20160307114922"></img>
+          `, 'text/html')
+  
+    t.getElementById('ddDownload').addEventListener('click', () => {
+        $('.oax-domaw-restrict > a').each((i,a) => {
+          const href = a.href;
+         	const id = href.slice(href.lastIndexOf('/')+1);
+          
+          const tou = i*2500+Math.floor(i/10)*30000;
+          console.log(tou + "::" + i);
+          setTimeout(() => {
+          	window.open(`https://www.outdooractive.com/de/download.tour.gpx?i=${id}&project=outdooractive`);
+          }, tou)
+        })
+      })
+    
+    
+      $("header").append(t.body.firstChild);
+  
+  }
+  
+  
+  
+  waitForKeyElements("#oax_header_profile", setTimeout(() => addCustomHeader(), 1000));
