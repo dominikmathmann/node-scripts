@@ -15,14 +15,20 @@ function addCustomHeader() {
           `, 'text/html')
   
     t.getElementById('ddDownload').addEventListener('click', () => {
-        $('.oax-domaw-restrict > a').each((i,a) => {
+        const elements = $('.oax_gallery_snippet .oax-domaw-restrict > a');
+        let opened = 0;
+        $(elements).each((i,a) => {
           const href = a.href;
-         	const id = href.slice(href.lastIndexOf('/')+1);
+          const splits=href.split('\/');
+         	const id = splits[splits.length-1]||splits[splits.length-2]
+          
           
           const tou = i*2500+Math.floor(i/10)*30000;
           console.log(tou + "::" + i);
           setTimeout(() => {
           	window.open(`https://www.outdooractive.com/de/download.tour.gpx?i=${id}&project=outdooractive`);
+            opened++;
+            console.log('downloaded: ' + opened + '/' + elements.length);
           }, tou)
         })
       })
