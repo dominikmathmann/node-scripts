@@ -6,32 +6,31 @@
 // @grant    GM_addStyle
 // ==/UserScript==
 
-let productDivHeight = 416;
-var gm_done=false;
-
-function scrollToFavourite(){
-    console.log("Fav " + gm_done);
-  if (gm_done) return;
+let scrolled = false;
+waitForKeyElements('[data-testid="rs-qa-add-to-basket-button"]', (ele) => {
+  if(!scrolled){
+      scrolled=true;
+      $('html, body').animate({
+        scrollTop: $(document).height()
+      }, 5000, () => {
+      	let favs = $('.lrms-isActive');
+        if(favs.length){
+            const el = $(favs.get(0));
+            const offsetTop = $(favs.get(0)).offset().top;
+            const elementHeight = el.outerHeight();
+            const windowHeight = $(window).height();
+            const scrollTo = offsetTop - (windowHeight / 2) + (elementHeight / 2);
+            
+            const container = $('.lrms-isActive').get(0).closest('div[class*="a-pt__theme"]')
+            $(container).css('border', '10px solid red');
   
-  setTimeout(() => {gm_done= true}, 1000);
-  let favs = $(".lrms-isActive");
-  if (favs){
-    favs.each((i,e) => e.closest(".search-service-product").style.border="4px solid red");
-    let fav = favs.last().get()[0]
-    console.log(fav.getBoundingClientRect().top - productDivHeight);
-		window.scrollTo(0, fav.getBoundingClientRect().top - productDivHeight);
-    //fav.closest(".search-service-product").style.border="4px solid red"
-    fav.focus();
-    gm_done=true;
+          window.scrollTo(0, scrollTo);
+        }else {
+          window.scrollTo(0, 0);
+        }
+      });
   }
-}
 
+})
 
-function reset(){
- gm_done=false;
-}
-
-waitForKeyElements(".lrms-isActive", scrollToFavourite);
-
-window.addEventListener('locationchange', reset)
-$(".rsss-all-results-button").click(reset);
+console.log("REWE HERE");
