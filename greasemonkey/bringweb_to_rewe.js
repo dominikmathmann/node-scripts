@@ -1,10 +1,13 @@
 // ==UserScript==
-// @name     Unbenanntes Skript 200284
+// @name     Bring to Rewe
 // @version  1
 // @require  http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
 // @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant    GM_addStyle
 // ==/UserScript==
+
+
+const OPEN_DELAY = 3000;
 
 function addCustomSearchResult(jNode) {
     jNode.prepend(
@@ -16,19 +19,25 @@ function addCustomSearchResult(jNode) {
 
 function connectToRewe() {
     let fixList = ["Kaffee", "Eier", "Joghurt"]
-
-    $(".bring-list-item-container-to-purchase .bring-list-item-text-container").each( (index,ele) => {
-        console.log(ele);
+    
+		const eles = $(".bring-list-item-container-to-purchase .bring-list-item-text-container")
+    eles.each( (index,ele) => {
+        console.log(ele, index);
         let main = ele.childNodes[1];
         let sub = ele.childNodes[3];
         let subText = sub.innerHTML.trim()?", " + sub.innerHTML:"";
         let food = main.innerHTML + subText
         let fIndex = fixList.indexOf(food);
         if (fIndex != -1) fixList.splice(fIndex, 1);
-        window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=80&search=" + food);
+        setTimeout(() => window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=75&search=" + food), index * OPEN_DELAY)
     });
     
-    fixList.forEach(e => window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=80&search=" + e));
+    let fixI=0;
+ 	  fixList.forEach(e => {
+    fixI = fixI + 1;
+    setTimeout(() => window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=75&search=" + e), (1 + eles.length + fixI) * OPEN_DELAY)
+    
+    });
     //https://shop.rewe.de/productList?search=Feta
 }
 
