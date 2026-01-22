@@ -7,6 +7,12 @@
 // ==/UserScript==
 
 let scrolled = false;
+
+waitForKeyElements('.teaser_wrp', (ele) => {
+  console.log("RELOAD");
+  setTimeout(() => location.reload(), 1000);
+})
+
 waitForKeyElements('[data-testid="rs-qa-add-to-basket-button"]', (ele) => {
   if(!scrolled){
       scrolled=true;
@@ -32,5 +38,3 @@ waitForKeyElements('[data-testid="rs-qa-add-to-basket-button"]', (ele) => {
   }
 
 })
-
-console.log("REWE HERE");
