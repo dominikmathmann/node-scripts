@@ -29,13 +29,13 @@ function connectToRewe() {
         let food = main.innerHTML + subText
         let fIndex = fixList.indexOf(food);
         if (fIndex != -1) fixList.splice(fIndex, 1);
-        setTimeout(() => window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=75&search=" + food), index * OPEN_DELAY)
+        setTimeout(() => window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=80&search=" + food), index * OPEN_DELAY)
     });
     
     let fixI=0;
  	  fixList.forEach(e => {
     fixI = fixI + 1;
-    setTimeout(() => window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=75&search=" + e), (1 + eles.length + fixI) * OPEN_DELAY)
+    setTimeout(() => window.open("https://shop.rewe.de/productList?merchantType=REWE&objectsPerPage=80&search=" + e), (1 + eles.length + fixI) * OPEN_DELAY)
     
     });
     //https://shop.rewe.de/productList?search=Feta
